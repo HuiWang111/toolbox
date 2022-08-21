@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design/icons-vue": "^6.1.0",
     "daisyui": "^2.24.0",
     "pinia": "^2.0.20",
     "vue": "^3.2.37"

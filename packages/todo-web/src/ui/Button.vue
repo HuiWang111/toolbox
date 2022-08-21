@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { withDefaults, defineProps, computed } from 'vue'
+import { computed } from 'vue'
 
 interface ButtonProps {
   type?: 'primary' | 'secondary' | 'accent' | 'ghost' | 'link' | 'default';

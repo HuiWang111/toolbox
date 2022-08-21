@@ -20,13 +20,18 @@
       @open="handleOpen"
       @select="handleSelect"
     />
+    <modal
+      :visible="true"
+    >
+
+    </modal>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { PlusOutlined } from '@ant-design/icons-vue'
-import { DButton } from '@/ui';
+import { DButton, Modal } from '@/ui';
 import EventList from './event-list.vue';
 
 interface Event {

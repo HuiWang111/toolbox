@@ -26,6 +26,7 @@
             v-for="(child, i) in event.children"
             :key="child.id"
             @click="handleSelect(i, index)"
+            @contextmenu.prevent="(e) => handleContextMenu(e, child, false)"
             :class="{
               'event-item': true,
               'event-item-selected': selected === `${index}-${i}`
@@ -70,14 +71,17 @@ withDefaults(defineProps<EventListProps>(), {
   events: () => []
 })
 
-const emit = defineEmits(['open', 'select'])
+const emit = defineEmits(['open', 'select', 'contextmenu'])
 
 const handleSelect = (index: number, parentIndex?: number) => {
   emit('select', index, parentIndex)
 }
-
 const handleOpen = (index: number) => {
   emit('open', index)
+}
+const handleContextMenu = (e: MouseEvent, event: Event, isSub: boolean) => {
+  console.log(e)
+  emit('contextmenu', { x: e.clientX, y: e.clientY }, event, isSub)
 }
 </script>
 

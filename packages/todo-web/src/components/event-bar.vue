@@ -19,19 +19,21 @@
       :events="events"
       @open="handleOpen"
       @select="handleSelect"
+      @contextmenu="handleContextMenu"
     />
-    <modal
-      :visible="true"
-    >
-
-    </modal>
+    <context-menu
+      :menus="CONTEXT_MENUS"
+      :visible="contextMenuVisible"
+      :x="contextMenuPos.x"
+      :y="contextMenuPos.y"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import { PlusOutlined } from '@ant-design/icons-vue'
-import { DButton, Modal } from '@/ui';
+import { DButton, ContextMenu } from '@/ui';
 import EventList from './event-list.vue';
 
 interface Event {
@@ -44,10 +46,21 @@ interface EventBarProps {
   events?: Event[];
 }
 
+interface MousePosData {
+  x: number;
+  y: number;
+}
+
+const CONTEXT_MENUS = [
+  { value: 1, label: '删除' },
+  { value: 2, label: '重命名' }
+]
+
 withDefaults(defineProps<EventBarProps>(), {
   events: () => [
     { id: 1, name: 'Icon', children: [
-      { id: 2, name: 'Typography' }
+      { id: 2, name: 'Typography1' },
+      { id: 4, name: 'Typography2' }
     ] },
     { id: 3, name: 'Divider' }
   ]
@@ -57,11 +70,12 @@ const emit = defineEmits(['create-event'])
 
 const openedIndexes = ref<Set<number>>(new Set())
 const selected = ref('')
+const contextMenuVisible = ref(false)
+const contextMenuPos = reactive({ x: 0, y: 0 })
 
 const handleCreateEvent = () => {
   emit('create-event')
 }
-
 const handleOpen = (index: number) => {
   if (openedIndexes.value.has(index)) {
     openedIndexes.value.delete(index)
@@ -69,9 +83,13 @@ const handleOpen = (index: number) => {
     openedIndexes.value.add(index)
   }
 }
-
 const handleSelect = (index: number, parentIndex?: number) => {
   selected.value = parentIndex != null ? `${parentIndex}-${index}` : String(index)
+}
+const handleContextMenu = (pos: MousePosData, event: Omit<Event, 'children'>, isSub: boolean) => {
+  contextMenuPos.x = pos.x
+  contextMenuPos.y = pos.y
+  contextMenuVisible.value = true
 }
 </script>
 
@@ -93,7 +111,7 @@ const handleSelect = (index: number, parentIndex?: number) => {
   }
 
   &-name {
-    padding: 0 20px;
+    padding: 0 10px;
     color: #00000073;
     line-height: 1.5715;
     transition: all .3s;
@@ -113,7 +131,7 @@ const handleSelect = (index: number, parentIndex?: number) => {
 
   .new-event-btn {
     margin: 0 auto 20px;
-    width: calc(100% - 40px);
+    width: calc(100% - 20px);
   }
 }
 </style>

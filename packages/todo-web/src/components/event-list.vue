@@ -80,7 +80,6 @@ const handleOpen = (index: number) => {
   emit('open', index)
 }
 const handleContextMenu = (e: MouseEvent, event: Event, isSub: boolean) => {
-  console.log(e)
   emit('contextmenu', { x: e.clientX, y: e.clientY }, event, isSub)
 }
 </script>

@@ -1,20 +1,24 @@
 <template>
   <portal :get-container="getContainer">
     <div
-      class="todo-web-context-menu"
+      class="todo-web-context-menu shadow-xl"
       :style="{
         left: `${x}px`,
         top: `${y}px`
       }"
       v-show="visible"
+      v-clickoutside="handleClickOutside"
     >
-      <ul class="menu bg-base-100 w-56 shadow-xl">
+      <ul
+        class="menu menu-compact bg-base-100 w-56"
+        v-show="visible"
+      >
         <li
           v-for="menu in menus"
           :key="menu.value"
           @click.stop="handleSelect(menu)"
         >
-          {{ menu.label }}
+          <a>{{ menu.label }}</a>
         </li>
       </ul>
     </div>
@@ -34,6 +38,7 @@ interface ContextMenuProps {
   x?: number;
   y?: number;
   menus: Menu[];
+  closeOnSelect?: boolean;
   getContainer?: () => HTMLElement;
 }
 
@@ -44,14 +49,19 @@ withDefaults(defineProps<ContextMenuProps>(), {
   getContainer: () => document.body
 })
 
-const emit = defineEmits(['select'])
+const emit = defineEmits(['select', 'clickoutside'])
 const handleSelect = (menu: Menu) => {
   emit('select', menu)
+}
+const handleClickOutside = () => {
+  emit('clickoutside')
 }
 </script>
 
 <style lang="less">
 .todo-web-context-menu {
   position: absolute;
+  overflow: hidden;
+  border-radius: 2px;
 }
 </style>

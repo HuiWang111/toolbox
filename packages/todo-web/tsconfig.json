@@ -19,7 +19,9 @@
       "@/domains": ["./src/domains"],
       "@/utils": ["./src/utils"],
       "@/ui": ["./src/ui"],
-      "@/styles": ["./src/styles"]
+      "@/styles": ["./src/styles"],
+      "@/directives": ["./src/directives"],
+      "@/contants": ["./src/contants"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],

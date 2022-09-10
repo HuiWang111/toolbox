@@ -26,6 +26,8 @@
       :visible="contextMenuVisible"
       :x="contextMenuPos.x"
       :y="contextMenuPos.y"
+      @clickoutside="handleClickOutside"
+      @select="handleSelect"
     />
   </div>
 </template>
@@ -34,7 +36,13 @@
 import { ref, reactive } from 'vue'
 import { PlusOutlined } from '@ant-design/icons-vue'
 import { DButton, ContextMenu } from '@/ui';
+import { CONTEXT_MENU } from '@/contants'
 import EventList from './event-list.vue';
+
+interface Menu {
+  value: string | number;
+  label: string | number;
+}
 
 interface Event {
   id: number;
@@ -52,8 +60,8 @@ interface MousePosData {
 }
 
 const CONTEXT_MENUS = [
-  { value: 1, label: '删除' },
-  { value: 2, label: '重命名' }
+  { value: CONTEXT_MENU.delete, label: '删除' },
+  { value: CONTEXT_MENU.rename, label: '重命名' },
 ]
 
 withDefaults(defineProps<EventBarProps>(), {
@@ -90,6 +98,23 @@ const handleContextMenu = (pos: MousePosData, event: Omit<Event, 'children'>, is
   contextMenuPos.x = pos.x
   contextMenuPos.y = pos.y
   contextMenuVisible.value = true
+}
+const handleClickOutside = () => {
+  if (contextMenuVisible.value) {
+    contextMenuVisible.value = false
+  }
+}
+const handleSelectMenu = (menu: Menu) => {
+  switch(menu.value) {
+    case CONTEXT_MENU.delete: {
+      // TODO: delete
+      break;
+    }
+    case CONTEXT_MENU.rename: {
+      // TODO: rename
+      break;
+    }
+  }
 }
 </script>
 

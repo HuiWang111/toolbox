@@ -4,7 +4,7 @@
     <div class="todo-event-bar-name">
       <div>Events</div>
     </div>
-    <d-button
+    <t-button
       outline
       type="primary"
       class="new-event-btn"
@@ -12,7 +12,7 @@
       @click="handleCreateEvent"
     >
       <plus-outlined :style="{ fontSize: '16px' }" />
-    </d-button>
+    </t-button>
     <event-list
       :selected="selected"
       :opened="openedIndexes"
@@ -21,7 +21,7 @@
       @select="handleSelect"
       @contextmenu="handleContextMenu"
     />
-    <context-menu
+    <t-context-menu
       :menus="CONTEXT_MENUS"
       :visible="contextMenuVisible"
       :x="contextMenuPos.x"
@@ -35,7 +35,7 @@
 <script lang="ts" setup>
 import { ref, reactive } from 'vue'
 import { PlusOutlined } from '@ant-design/icons-vue'
-import { DButton, ContextMenu } from '@/ui';
+// import { DButton, ContextMenu } from '@/ui';
 import { CONTEXT_MENU } from '@/contants'
 import EventList from './event-list.vue';
 

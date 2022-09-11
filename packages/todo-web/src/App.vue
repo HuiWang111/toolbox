@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { EventBar } from '@/components'
-import { Modal } from '@/ui'
 </script>
 
 <template>
   <div class="todos">
     <event-bar />
-    <modal :visible="true">
-    </modal>
+    <!-- <t-modal :visible="true">
+      <span>123</span>
+    </t-modal> -->
   </div>
 </template>
 

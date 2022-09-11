@@ -11,7 +11,7 @@ export default defineComponent({
   props: {
     getContainer: {
       type: Function,
-      required: true
+      default: () => document.body
     }
   },
   setup(props, { slots }) {
@@ -25,7 +25,7 @@ export default defineComponent({
       }
     });
     return () => {
-      return container ? <Teleport to={container} v-slots={slots}></Teleport> : null;
+      return container ? <Teleport to={container} v-slots={slots} /> : null;
     };
   }
 });

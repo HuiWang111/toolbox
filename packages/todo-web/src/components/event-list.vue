@@ -50,15 +50,31 @@
       </li>
     </template>
   </ul>
+  <t-context-menu
+    :menus="CONTEXT_MENUS"
+    :visible="contextMenuVisible"
+    :x="contextMenuPos.x"
+    :y="contextMenuPos.y"
+    @close="closeContextMenu"
+    @select="handleSelectMenu"
+  />
 </template>
 
 <script setup lang="ts">
 import { DownOutlined } from '@ant-design/icons-vue'
+import { ref, reactive } from 'vue'
+import { CONTEXT_MENU, CONTEXT_MENUS } from '@/contants'
+import { Modal } from '@/ui'
 
 interface Event {
   id: number;
   name: string;
   children?: Omit<Event, 'children'>[];
+}
+
+interface Menu {
+  value: string | number;
+  label: string | number;
 }
 
 interface EventListProps {
@@ -67,11 +83,15 @@ interface EventListProps {
   selected: string;
 }
 
-withDefaults(defineProps<EventListProps>(), {
+const props = withDefaults(defineProps<EventListProps>(), {
   events: () => []
 })
 
-const emit = defineEmits(['open', 'select', 'contextmenu'])
+const contextMenuVisible = ref(false)
+const currentEventItem = ref<Event | null>(null)
+const contextMenuPos = reactive({ x: 0, y: 0 })
+
+const emit = defineEmits(['open', 'select', 'change'])
 
 const handleSelect = (index: number, parentIndex?: number) => {
   emit('select', index, parentIndex)
@@ -79,8 +99,44 @@ const handleSelect = (index: number, parentIndex?: number) => {
 const handleOpen = (index: number) => {
   emit('open', index)
 }
-const handleContextMenu = (e: MouseEvent, event: Event, isSub: boolean) => {
-  emit('contextmenu', { x: e.clientX, y: e.clientY }, event, isSub)
+const handleContextMenu = (e: MouseEvent, event: Event, isDirectory: boolean) => {
+  contextMenuPos.x = e.clientX
+  contextMenuPos.y = e.clientY
+  contextMenuVisible.value = true
+  currentEventItem.value = { ...event }
+}
+const closeContextMenu = () => {
+  if (contextMenuVisible.value) {
+    contextMenuVisible.value = false
+  }
+}
+const deleteEventItem = (id?: Event['id']) => {
+  if (!id) return
+  const list = props.events.filter(e => {
+    if (e.children) {
+      e.children = e.children.filter(c => c.id !== id)
+      return true
+    }
+
+    return e.id !== id
+  })
+  emit('change', list)
+}
+const handleSelectMenu = (menu: Menu) => {
+  switch(menu.value) {
+    case CONTEXT_MENU.delete: {
+      Modal.confirm({
+        title: '提示',
+        content: '确认删除当前的事件吗？',
+        onOk: () => deleteEventItem(currentEventItem.value?.id)
+      })
+      break;
+    }
+    case CONTEXT_MENU.rename: {
+      // TODO: rename
+      break;
+    }
+  }
 }
 </script>
 

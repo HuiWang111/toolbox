@@ -16,70 +16,26 @@
     <event-list
       :selected="selected"
       :opened="openedIndexes"
-      :events="events"
+      :events="eventStore.list"
       @open="handleOpen"
       @select="handleSelect"
-      @contextmenu="handleContextMenu"
-    />
-    <t-context-menu
-      :menus="CONTEXT_MENUS"
-      :visible="contextMenuVisible"
-      :x="contextMenuPos.x"
-      :y="contextMenuPos.y"
-      @clickoutside="handleClickOutside"
-      @select="handleSelect"
+      @change="handleEventsChange"
     />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
 import { PlusOutlined } from '@ant-design/icons-vue'
-// import { DButton, ContextMenu } from '@/ui';
-import { CONTEXT_MENU } from '@/contants'
-import EventList from './event-list.vue';
-
-interface Menu {
-  value: string | number;
-  label: string | number;
-}
-
-interface Event {
-  id: number;
-  name: string;
-  children?: Omit<Event, 'children'>[];
-}
-
-interface EventBarProps {
-  events?: Event[];
-}
-
-interface MousePosData {
-  x: number;
-  y: number;
-}
-
-const CONTEXT_MENUS = [
-  { value: CONTEXT_MENU.delete, label: '删除' },
-  { value: CONTEXT_MENU.rename, label: '重命名' },
-]
-
-withDefaults(defineProps<EventBarProps>(), {
-  events: () => [
-    { id: 1, name: 'Icon', children: [
-      { id: 2, name: 'Typography1' },
-      { id: 4, name: 'Typography2' }
-    ] },
-    { id: 3, name: 'Divider' }
-  ]
-})
+import { useEventStore } from '@/stores'
+import EventList from './event-list.vue'
+import type { Event } from './types'
 
 const emit = defineEmits(['create-event'])
 
 const openedIndexes = ref<Set<number>>(new Set())
 const selected = ref('')
-const contextMenuVisible = ref(false)
-const contextMenuPos = reactive({ x: 0, y: 0 })
+const eventStore = useEventStore()
 
 const handleCreateEvent = () => {
   emit('create-event')
@@ -94,27 +50,9 @@ const handleOpen = (index: number) => {
 const handleSelect = (index: number, parentIndex?: number) => {
   selected.value = parentIndex != null ? `${parentIndex}-${index}` : String(index)
 }
-const handleContextMenu = (pos: MousePosData, event: Omit<Event, 'children'>, isSub: boolean) => {
-  contextMenuPos.x = pos.x
-  contextMenuPos.y = pos.y
-  contextMenuVisible.value = true
-}
-const handleClickOutside = () => {
-  if (contextMenuVisible.value) {
-    contextMenuVisible.value = false
-  }
-}
-const handleSelectMenu = (menu: Menu) => {
-  switch(menu.value) {
-    case CONTEXT_MENU.delete: {
-      // TODO: delete
-      break;
-    }
-    case CONTEXT_MENU.rename: {
-      // TODO: rename
-      break;
-    }
-  }
+const handleEventsChange = (list: Event[]) => {
+  console.log(list)
+  eventStore.$patch({ list })
 }
 </script>
 

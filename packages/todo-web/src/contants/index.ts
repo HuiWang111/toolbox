@@ -1,1 +1,4 @@
-export { CONTEXT_MENU } from './context-menu'
+export {
+  CONTEXT_MENU,
+  CONTEXT_MENUS
+} from './context-menu'

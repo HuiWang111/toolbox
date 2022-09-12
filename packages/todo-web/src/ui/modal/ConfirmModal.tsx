@@ -1,9 +1,9 @@
 import type { VNode } from 'vue'
-import { Modal } from './Modal'
-import type { ModalProps } from './Modal'
+import { Dialog } from './Dialog'
+import type { DialogProps } from './Dialog'
 import { isFunction } from '@/utils'
 
-export interface InternalConfirmModalProps extends Omit<ModalProps, 'title'> {
+export interface InternalConfirmModalProps extends Omit<DialogProps, 'title'> {
   icon: VNode | (() => VNode);
   title: string | VNode;
   content?: string | VNode;
@@ -35,7 +35,7 @@ export const ConfirmModal = (props: InternalConfirmModalProps) => {
   }
 
   return (
-    <Modal
+    <Dialog
       { ...restProps }
       onCancel={handleCancel}
       onOk={handleOk}
@@ -51,6 +51,6 @@ export const ConfirmModal = (props: InternalConfirmModalProps) => {
           { content }
         </div>
       </div>
-    </Modal>
+    </Dialog>
   )
 }

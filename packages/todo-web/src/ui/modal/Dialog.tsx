@@ -1,9 +1,9 @@
 import { defineComponent } from 'vue'
 import type { ExtractPropTypes } from 'vue'
-import { genProp, Portal, isFunction } from '@/utils'
+import { genProp, isFunction } from '@/utils'
 import './style.less'
 
-const modalProps = () => ({
+export const dialogProps = () => ({
   closable: genProp(Boolean, true),
   visible: genProp(Boolean, false),
   title: genProp(null),
@@ -16,11 +16,10 @@ const modalProps = () => ({
   modalClass: genProp(String)
 })
 
-export type ModalProps = ExtractPropTypes<ReturnType<typeof modalProps>>
+export type DialogProps = ExtractPropTypes<ReturnType<typeof dialogProps>>
 
-export const Modal = defineComponent({
-  name: 't-modal',
-  props: modalProps(),
+export const Dialog = defineComponent({
+  props: dialogProps(),
   emits: ['cancel', 'ok', 'close'],
   setup(props, { emit, slots }) {
     const noop = () => {}
@@ -44,7 +43,7 @@ export const Modal = defineComponent({
       }
 
       return (
-        <Portal>
+        <>
           <input
             type="checkbox"
             class="t-modal-wrapper modal-toggle"
@@ -112,7 +111,7 @@ export const Modal = defineComponent({
               </div>
             </div>
           </div>
-        </Portal>
+        </>
       )
     }
   }

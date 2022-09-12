@@ -17,6 +17,17 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  --success-color: #52c41a;
+  --success-color-hover: #73d13d;
+  --success-color-active: #389e0d;
+  --error-color: #ff4d4f;
+  --error-color-hover: #ff7875;
+  --error-color-active: #d9363e;
+  --warning-color: #faad14;
+  --warning-color-hover: #ffc53d;
+  --warning-color-active: #d48806;
+  --info-color: #1890ff;
 }
 
 a {

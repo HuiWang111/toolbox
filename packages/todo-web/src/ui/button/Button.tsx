@@ -1,51 +1,22 @@
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, unref } from 'vue'
 import type { PropType } from 'vue'
+import { genProp } from '@/utils'
 
 type ButtonType = 'primary' | 'secondary' | 'accent' | 'ghost' | 'link' | 'default';
 type ButtonState = 'info' | 'success' | 'warning' | 'error' | 'default';
 type ButtonSize = 'lg' | 'sm' | 'xs' | 'default';
 
 const buttonProps = () => ({
-  type: {
-    type: String as PropType<ButtonType>,
-    default: 'default'
-  },
-  state: {
-    type: String as PropType<ButtonState>,
-    default: 'default'
-  },
-  size: {
-    type: String as PropType<ButtonSize>,
-    default: 'default'
-  },
-  danger: {
-    type: Boolean,
-    default: false
-  },
-  outline: {
-    type: Boolean,
-    default: false
-  },
-  wide: {
-    type: Boolean,
-    default: false
-  },
-  glass: {
-    type: Boolean,
-    default: false
-  },
-  square: {
-    type: Boolean,
-    default: false
-  },
-  circle: {
-    type: Boolean,
-    default: false
-  },
-  block: {
-    type: Boolean,
-    default: false
-  }
+  type: genProp(String as PropType<ButtonType>, 'default'),
+  state: genProp(String as PropType<ButtonState>, 'default'),
+  size: genProp(String as PropType<ButtonSize>, 'default'),
+  danger: genProp(Boolean, false),
+  outline: genProp(Boolean, false),
+  wide: genProp(Boolean, false),
+  glass: genProp(Boolean, false),
+  square: genProp(Boolean, false),
+  circle: genProp(Boolean, false),
+  block: genProp(Boolean, false)
 })
 
 export const Button = defineComponent({
@@ -69,7 +40,7 @@ export const Button = defineComponent({
 
     return () => {
       return (
-        <button class={className.value}>{slots.default?.()}</button>
+        <button class={unref(className)}>{slots.default?.()}</button>
       )
     }
   }

@@ -29,7 +29,7 @@ export function clickOutSideDirective(): ObjectDirective {
       }
 
       document.removeEventListener('click', binding.value)
-      document.removeEventListener('click', elListener)
+      el.removeEventListener('click', elListener)
     }
   }
 }

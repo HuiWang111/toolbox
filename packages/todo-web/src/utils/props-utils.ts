@@ -11,13 +11,13 @@ interface PropOptions<T = any, D = T> {
 
 export function genProp<T = any, D = T>(
   type: PropType<T> | true | null,
-  Default?: D | DefaultFactory<D> | null | undefined | object,
+  def?: D | DefaultFactory<D> | null | undefined | object,
   required = false,
   validator?: (value: unknown) => boolean
 ): PropOptions<T, D> {
   return {
     type,
-    default: Default,
+    default: def,
     required,
     validator
   }

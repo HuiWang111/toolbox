@@ -1,13 +1,22 @@
 import { defineComponent } from 'vue'
-import { genProp, Portal } from '@/utils'
+import type { ExtractPropTypes } from 'vue'
+import { genProp, Portal, isFunction } from '@/utils'
+import './style.less'
 
 const modalProps = () => ({
   closable: genProp(Boolean, true),
   visible: genProp(Boolean, false),
-  title: genProp(String),
+  title: genProp(null),
   footer: genProp(null),
-  getContainer: genProp(Function, () => document.body)
+  getContainer: genProp(Function, () => document.body),
+  afterClose: genProp(Function),
+  cancelButtonText: genProp(null, '取消'),
+  okButtonText: genProp(null, '确定'),
+  destroyOnClose: genProp(Boolean, false),
+  modalClass: genProp(String)
 })
+
+export type ModalProps = ExtractPropTypes<ReturnType<typeof modalProps>>
 
 export const Modal = defineComponent({
   name: 't-modal',
@@ -23,18 +32,31 @@ export const Modal = defineComponent({
     }
     const handleClose = () => {
       emit('close')
+
+      if (isFunction(props.afterClose)) {
+        props.afterClose()
+      }
     }
 
     return () => {
+      if (!props.visible && props.destroyOnClose) {
+        return null
+      }
+
       return (
         <Portal>
           <input
             type="checkbox"
-            class="modal-toggle"
+            class="t-modal-wrapper modal-toggle"
             checked={props.visible}
             onChange={noop}
           />
-          <div class="modal d-modal">
+          <div
+            class={{
+              'modal t-modal': true,
+              [props.modalClass as string]: Boolean(props.modalClass)
+            }}
+          >
             <div class="modal-box relative">
               {
                 props.closable && (
@@ -48,30 +70,42 @@ export const Modal = defineComponent({
               }
               {
                 props.title && (
-                  <div class="flex justify-center d-modal-title">
-                    { props.title }
+                  <div class='t-modal-header'>
+                    <div class="flex t-modal-title">
+                      { props.title }
+                    </div>
                   </div>
                 )
               }
-              { slots.default?.() }
-              <div class="modal-action flex justify-center">
+              <div class='t-modal-body'>
+                { slots.default?.() }
+              </div>
+              <div class="modal-action flex t-modal-footer">
                 {
                   slots.footer
                     ? slots.footer()
                     : props.footer !== null && (
                       <>
-                        <label
-                          class="btn btn-outline btn-primary btn-sm"
-                          onClick={handleCancel}
-                        >
-                          取消
-                        </label>
-                        <label
-                          class="btn btn-primary btn-sm"
-                          onClick={handleConfirm}
-                        >
-                          确定
-                        </label>
+                        {
+                          props.cancelButtonText !== null && (
+                            <label
+                              class="btn btn-outline btn-primary btn-sm"
+                              onClick={handleCancel}
+                            >
+                              { props.cancelButtonText }
+                            </label>
+                          )
+                        }
+                        {
+                          props.okButtonText !== null && (
+                            <label
+                              class="btn btn-primary btn-sm"
+                              onClick={handleConfirm}
+                            >
+                              { props.okButtonText }
+                            </label>
+                          )
+                        }
                       </>
                     )
                 }

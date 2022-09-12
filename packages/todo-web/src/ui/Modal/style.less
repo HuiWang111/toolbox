@@ -1,0 +1,73 @@
+.t-modal {
+  &-header {
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f0f0f0;
+
+    .t-modal-title {
+      margin: 0;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 22px;
+      word-wrap: break-word;
+    }
+  }
+
+  &-body {
+    padding: 24px 0;
+    font-size: 14px;
+    line-height: 1.5715;
+    word-wrap: break-word;
+  }
+}
+
+.t-confirm-modal-body {
+  > .anticon {
+    float: left;
+    margin-right: 16px;
+    font-size: 22px;
+  }
+
+  .t-confirm-modal-title {
+    display: block;
+    overflow: hidden;
+    color: #000000d9;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.4;
+  }
+
+  .t-confirm-modal-content {
+    margin-top: 8px;
+    color: #000000d9;
+    font-size: 14px;
+  }
+
+  > .anticon + .t-confirm-modal-title + .t-confirm-modal-content {
+    margin-left: 38px;
+  }
+}
+
+.t-modal-confirm-confirm,
+.t-modal-confirm-warning {
+  .t-confirm-modal-body > .anticon {
+    color: var(--warning-color)
+  }
+}
+
+.t-modal-confirm-info {
+  .t-confirm-modal-body > .anticon {
+    color: var(--info-color);
+  }
+}
+
+.t-modal-confirm-success {
+  .t-confirm-modal-body > .anticon {
+    color: var(--success-color);
+  }
+}
+
+.t-modal-confirm-error {
+  .t-confirm-modal-body > .anticon {
+    color: var(--error-color);
+  }
+}

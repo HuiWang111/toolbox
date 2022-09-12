@@ -1,5 +1,5 @@
 import { defineComponent, PropType } from 'vue'
-import { Portal } from '@/utils'
+import { Portal, genProp } from '@/utils'
 import './style.less'
 
 interface Menu {
@@ -9,29 +9,12 @@ interface Menu {
 
 const contextMenuProps = () => {
   return {
-    visible: {
-      type: Boolean,
-      default: false
-    },
-    x: {
-      type: Number,
-      default: 0
-    },
-    y: {
-      type: Number,
-      default: 0
-    },
-    menus: {
-      type: Array as PropType<Menu[]>,
-      required: true
-    },
-    closeOnSelect: {
-      type: Boolean,
-      default: false
-    },
-    getContainer: {
-      type: Function
-    }
+    visible: genProp(Boolean, false),
+    x: genProp(Number, 0),
+    y: genProp(Number, 0),
+    menus: genProp(Array as PropType<Menu[]>, undefined, true),
+    closeOnSelect: genProp(Boolean, false),
+    getContainer: genProp(Function)
   }
 }
 

@@ -5,9 +5,6 @@ import { EventBar } from '@/components'
 <template>
   <div class="todos">
     <event-bar />
-    <!-- <t-modal :visible="true">
-      <span>123</span>
-    </t-modal> -->
   </div>
 </template>
 

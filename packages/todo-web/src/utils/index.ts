@@ -6,10 +6,12 @@ export {
 
 export {
   isFunction
-} from './validator'
+} from './validator-utils'
 
 export type { RequiredKeys } from './type-utils'
 
 export { withInstall } from './install-utils'
 
 export { genProp } from './props-utils'
+
+export { createContainer } from './dom-utils'

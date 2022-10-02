@@ -18,16 +18,12 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-  --success-color: #52c41a;
-  --success-color-hover: #73d13d;
-  --success-color-active: #389e0d;
-  --error-color: #ff4d4f;
-  --error-color-hover: #ff7875;
-  --error-color-active: #d9363e;
-  --warning-color: #faad14;
-  --warning-color-hover: #ffc53d;
-  --warning-color-active: #d48806;
-  --info-color: #1890ff;
+  --primary-high-color: #FAA136;
+  --primary-medium-color: #FFB760;
+  --primary-low-color: #FFD8A9;
+  
+  --item-detail-color: #FEFFDF;
+  --main-background-color: #FFE1BD;
 }
 
 a {

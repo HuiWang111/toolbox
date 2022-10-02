@@ -1,15 +1,10 @@
 <script setup lang="ts">
-import { EventBar } from '@/components'
+  import { TodoList } from './pages/todo-list'
 </script>
 
 <template>
-  <div class="todos">
-    <event-bar />
-  </div>
+  <todo-list />
 </template>
 
 <style lang="less">
-.todos {
-  display: flex;
-}
 </style>

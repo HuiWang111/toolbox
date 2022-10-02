@@ -21,8 +21,8 @@
       "@/ui": ["./src/ui"],
       "@/styles": ["./src/styles"],
       "@/directives": ["./src/directives"],
-      "@/contants": ["./src/contants"],
-      "@/assets": ["./src/assets"]
+      "@/assets": ["./src/assets"],
+      "@/stores": ["./src/stores"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],

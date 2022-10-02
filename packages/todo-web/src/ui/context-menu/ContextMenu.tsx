@@ -13,7 +13,7 @@ const contextMenuProps = () => {
     x: genProp(Number, 0),
     y: genProp(Number, 0),
     menus: genProp(Array as PropType<Menu[]>, undefined, true),
-    closeOnSelect: genProp(Boolean, false),
+    closeOnSelect: genProp(Boolean, true),
     getContainer: genProp(Function)
   }
 }
@@ -21,14 +21,18 @@ const contextMenuProps = () => {
 export const ContextMenu = defineComponent({
   name: 't-context-menu',
   props: contextMenuProps(),
-  emits: ['select', 'clickoutside'],
+  emits: ['select', 'close'],
   setup(props, { emit }) {
     const handleSelect = (e: Event, menu: Menu) => {
       e.stopPropagation()
       emit('select', menu)
+
+      if (props.closeOnSelect) {
+        emit('close')
+      }
     }
     const handleClickOutside = () => {
-      emit('clickoutside')
+      emit('close')
     }
 
     return () => {

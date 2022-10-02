@@ -35,6 +35,7 @@ export function confirm(config: ConfirmModalProps): ConfirmRes {
       vueRender(null, container)
       confirmDialogInstance.component?.update()
       confirmDialogInstance = null
+      container.remove()
     }
 
     for (let i = 0; i < destroyFns.length; i++) {

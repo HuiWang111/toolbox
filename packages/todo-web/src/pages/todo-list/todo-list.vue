@@ -11,6 +11,9 @@
         :todo-list="todoList"
         :with-sidebar="showSidebar"
       />
+      <modal :visible="true">
+        
+      </modal>
     </div>
   </div>
 </template>
@@ -21,6 +24,7 @@ import Navbar from './components/Navbar.vue'
 import Sidebar from './components/Sidebar.vue'
 import TodoPanel from './components/TodoPanel.vue'
 import { TodoItem, TodoPriority } from './types'
+import { Modal } from '@/ui'
 
 interface Project {
   name: string;

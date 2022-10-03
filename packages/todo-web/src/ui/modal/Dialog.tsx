@@ -13,7 +13,8 @@ export const dialogProps = () => ({
   cancelButtonText: genProp(null, '取消'),
   okButtonText: genProp(null, '确定'),
   destroyOnClose: genProp(Boolean, false),
-  modalClass: genProp(String)
+  rootClass: genProp(String),
+  width: genProp(Number, 720)
 })
 
 export type DialogProps = ExtractPropTypes<ReturnType<typeof dialogProps>>
@@ -22,7 +23,6 @@ export const Dialog = defineComponent({
   props: dialogProps(),
   emits: ['cancel', 'ok', 'close'],
   setup(props, { emit, slots }) {
-    const noop = () => {}
     const handleCancel = () => {
       emit('cancel')
     }
@@ -43,20 +43,17 @@ export const Dialog = defineComponent({
       }
 
       return (
-        <>
-          <input
-            type="checkbox"
-            class="t-modal-wrapper modal-toggle"
-            checked={props.visible}
-            onChange={noop}
-          />
-          <div
-            class={{
-              'modal t-modal': true,
-              [props.modalClass as string]: Boolean(props.modalClass)
-            }}
-          >
-            <div class="modal-box relative">
+        <div
+          class={[
+            't-modal-root',
+            {
+              [props.rootClass as string]: Boolean(props.rootClass)
+            }
+          ]}
+        >
+          <div class="t-modal-mask"></div>
+          <div class="t-modal-wrap">
+            <div class="t-modal" style={`--modal-width: ${props.width}px`}>
               {
                 props.closable && (
                   <label
@@ -111,7 +108,7 @@ export const Dialog = defineComponent({
               </div>
             </div>
           </div>
-        </>
+        </div>
       )
     }
   }

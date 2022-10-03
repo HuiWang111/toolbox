@@ -1,9 +1,10 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import './style.css'
 import App from './App.vue'
 import { registeDirectives } from '@/directives'
 import { useComponents } from '@/ui'
+import './styles/index.less'
+import './style.css'
 
 const app = createApp(App)
 

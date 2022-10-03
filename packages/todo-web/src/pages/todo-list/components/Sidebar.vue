@@ -1,11 +1,12 @@
 <template>
-  <div class="sidebar">
+  <div :class="['sidebar', { 'sidebar-visible': visible }]">
     <div class="sidebar-title">Projects</div>
     <project-item
       text="New Project"
       color="#fff"
       bgcolor="rgba(209, 198, 158)"
       class="create-project-item"
+      :show-edit-icon="false"
       @click="handleCreateProject"
     />
     <div class="project-list">
@@ -28,10 +29,12 @@ interface Project {
 
 interface SidebarProps {
   projects?: Project[];
+  visible?: boolean;
 }
 
 withDefaults(defineProps<SidebarProps>(), {
-  projects: () => []
+  projects: () => [],
+  visible: true
 })
 
 const emit = defineEmits(['create'])
@@ -43,13 +46,21 @@ const handleCreateProject = () => {
 
 <style lang="less" scoped>
 .sidebar {
-  flex: 0 0 300px;
+  position: absolute;
+  left: -300px;
+  top: 0;
+  width: 300px;
+  height: 100%;
   background-color: #FFFBEF;
-  // padding: 20px;
   padding-bottom: 0;
   font-size: 32px;
   font-weight: 600;
   overflow: hidden;
+  transition: left .3s;
+
+  &.sidebar-visible {
+    left: 0;
+  }
 
   &-title {
     margin-top: 20px;

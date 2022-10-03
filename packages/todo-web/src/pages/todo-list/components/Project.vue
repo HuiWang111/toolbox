@@ -1,5 +1,8 @@
 <template>
-  <div class="project-item" :style="`--project-item-background-color: ${bgcolor}; --project-item-text-color: ${color};`">
+  <div
+    class="project-item click-effect"
+    :style="`--project-item-background-color: ${bgcolor}; --project-item-text-color: ${color};`"
+  >
     <span>{{ text }}</span>
     <img
       :src="editProjectIcon"

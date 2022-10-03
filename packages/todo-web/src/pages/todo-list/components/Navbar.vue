@@ -1,7 +1,12 @@
 <template>
   <div class="navbar">
     <div class="navbar-left">
-      <img :src="menuIcon" alt="menu" />
+      <img
+        :src="menuIcon"
+        alt="menu-icon"
+        class="click-effect"
+        @click="handleClickMenu"
+      />
     </div>
     <div class="navbar-center">
       <div class="">
@@ -16,6 +21,12 @@
 <script setup lang="ts">
 import todolistIcon from '@/assets/images/todolist.svg'
 import menuIcon from '@/assets/images/menu-btn.svg'
+
+const emit = defineEmits(['click-menu'])
+
+const handleClickMenu = () => {
+  emit('click-menu')
+}
 </script>
 
 <style lang="less" scoped>

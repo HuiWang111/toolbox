@@ -1,0 +1,36 @@
+.t-input-wrap {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  width: 100%;
+  border-bottom: 2px solid #635F5F;
+
+  .t-input {
+    flex: 1;
+    border: none;
+    background-color: transparent;
+    box-sizing: border-box;
+    height: 100%;
+    font-weight: 500;
+    font-size: 20px;
+    color: #585353;
+
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  .t-input-icon-wrap {
+    flex: 0 0 32px;
+    line-height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5px;
+
+    img {
+      width: 28px;
+      height: 28px;
+    }
+  }
+}

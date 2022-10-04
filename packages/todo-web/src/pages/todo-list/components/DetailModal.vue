@@ -8,7 +8,8 @@
   >
     <div class="detail-modal-title">Details</div>
     <div class="detail-modal-body">
-      <input class="title-input" placeholder="input todo title" />
+      <t-input placeholder="input todo title" />
+      <t-date-picker />
     </div>
     <div class="detail-modal-footer">
       <t-button
@@ -61,6 +62,11 @@ const handleDelete = () => {
 .t-modal-wrap .detail-modal .t-modal-body {
   padding: 16px;
 }
+.detail-modal-body {
+  .t-input-wrap + .t-input-wrap {
+    margin-top: 10px;
+  }
+}
 </style>
 <style scoped lang="less">
 .detail-modal {
@@ -75,19 +81,6 @@ const handleDelete = () => {
 
   &-body {
     margin-top: 20px;
-
-    .title-input {
-      width: 100%;
-      height: 32px;
-      border: none;
-      background-color: transparent;
-      border-bottom: 2px solid #635F5F;
-      box-sizing: border-box;
-
-      &:focus-visible {
-        outline: none;
-      }
-    }
   }
 
   &-footer {

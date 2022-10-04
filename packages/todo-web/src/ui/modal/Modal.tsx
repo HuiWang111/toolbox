@@ -7,13 +7,15 @@ export const Modal = defineComponent({
   name: 't-modal',
   props: dialogProps(),
   emits: ['cancel', 'ok', 'close'],
-  setup(props) {
+  setup(props, { slots }) {
     return () => {
       return (
         <Portal>
           <Dialog
             { ...props }
-          />
+          >
+            { slots.default?.() }
+          </Dialog>
         </Portal>
       )
     }

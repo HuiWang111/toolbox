@@ -11,9 +11,7 @@
         :todo-list="todoList"
         :with-sidebar="showSidebar"
       />
-      <modal :visible="true">
-        
-      </modal>
+      <detail-modal />
     </div>
   </div>
 </template>
@@ -23,8 +21,8 @@ import { ref } from 'vue'
 import Navbar from './components/Navbar.vue'
 import Sidebar from './components/Sidebar.vue'
 import TodoPanel from './components/TodoPanel.vue'
+import DetailModal from './components/DetailModal.vue'
 import { TodoItem, TodoPriority } from './types'
-import { Modal } from '@/ui'
 
 interface Project {
   name: string;
@@ -36,9 +34,9 @@ const projects = ref<Project[]>([
   { id: 2, name: 'Tuesday' },
 ])
 const todoList = ref<TodoItem[]>([
-  { id: 1, title: 'High Priority Item', priority: TodoPriority.High, description: '', date: '' },
-  { id: 2, title: 'Medium Priority Item', priority: TodoPriority.Medium, description: '', date: '' },
-  { id: 3, title: 'Low Priority Item', priority: TodoPriority.Low, description: '', date: '' },
+  { id: 1, title: 'High Priority Item', priority: TodoPriority.High, description: '', date: '', done: false },
+  { id: 2, title: 'Medium Priority Item', priority: TodoPriority.Medium, description: '', date: '', done: false },
+  { id: 3, title: 'Low Priority Item', priority: TodoPriority.Low, description: '', date: '', done: false },
 ])
 const showSidebar = ref(true)
 

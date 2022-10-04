@@ -1,6 +1,7 @@
 import { defineComponent } from 'vue'
 import type { ExtractPropTypes } from 'vue'
 import { genProp, isFunction } from '@/utils'
+import { Button } from '@/ui'
 import './style.less'
 
 export const dialogProps = () => ({
@@ -14,7 +15,8 @@ export const dialogProps = () => ({
   okButtonText: genProp(null, '确定'),
   destroyOnClose: genProp(Boolean, false),
   rootClass: genProp(String),
-  width: genProp(Number, 720)
+  width: genProp(Number, 720),
+  class: genProp(String)
 })
 
 export type DialogProps = ExtractPropTypes<ReturnType<typeof dialogProps>>
@@ -41,7 +43,7 @@ export const Dialog = defineComponent({
       if (!props.visible && props.destroyOnClose) {
         return null
       }
-
+      
       return (
         <div
           class={[
@@ -53,15 +55,18 @@ export const Dialog = defineComponent({
         >
           <div class="t-modal-mask"></div>
           <div class="t-modal-wrap">
-            <div class="t-modal" style={`--modal-width: ${props.width}px`}>
+            <div
+              class={['t-modal', { [props.class as string]: Boolean(props.class) }]}
+              style={`--modal-width: ${props.width}px`}
+            >
               {
                 props.closable && (
-                  <label
-                    class="btn btn-sm btn-circle absolute right-2 top-2"
+                  <button
+                    class="t-modal-close-icon"
                     onClick={handleClose}
                   >
-                    ✕
-                  </label>
+                    <span>✕</span>
+                  </button>
                 )
               }
               {
@@ -76,36 +81,39 @@ export const Dialog = defineComponent({
               <div class='t-modal-body'>
                 { slots.default?.() }
               </div>
-              <div class="modal-action flex t-modal-footer">
-                {
-                  slots.footer
-                    ? slots.footer()
-                    : props.footer !== null && (
-                      <>
-                        {
-                          props.cancelButtonText !== null && (
-                            <label
-                              class="btn btn-outline btn-primary btn-sm"
-                              onClick={handleCancel}
-                            >
-                              { props.cancelButtonText }
-                            </label>
-                          )
-                        }
-                        {
-                          props.okButtonText !== null && (
-                            <label
-                              class="btn btn-primary btn-sm"
-                              onClick={handleConfirm}
-                            >
-                              { props.okButtonText }
-                            </label>
-                          )
-                        }
-                      </>
-                    )
-                }
-              </div>
+              {
+                props.footer !== null && (
+                  <div class="t-modal-footer">
+                    {
+                      slots.footer
+                        ? slots.footer()
+                        : (
+                          <>
+                            {
+                              props.cancelButtonText !== null && (
+                                <Button
+                                  onClick={handleCancel}
+                                >
+                                  { props.cancelButtonText }
+                                </Button>
+                              )
+                            }
+                            {
+                              props.okButtonText !== null && (
+                                <Button
+                                  onClick={handleConfirm}
+                                  primary
+                                >
+                                  { props.okButtonText }
+                                </Button>
+                              )
+                            }
+                          </>
+                        )
+                    }
+                  </div>
+                )
+              }
             </div>
           </div>
         </div>

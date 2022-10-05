@@ -4,3 +4,7 @@ import { clickOutSideDirective } from './click-outside'
 export function registeDirectives(app: App) {
   app.directive('clickoutside', clickOutSideDirective())
 }
+
+export {
+  clickOutSideDirective
+}

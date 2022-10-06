@@ -9,7 +9,7 @@
     <div class="detail-modal-title">Details</div>
     <div class="detail-modal-body">
       <t-input placeholder="input todo title" />
-      <t-date-picker />
+      <t-date-picker placeholder="select todo deadline" />
     </div>
     <div class="detail-modal-footer">
       <t-button

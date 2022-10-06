@@ -6,7 +6,8 @@ export {
 
 export {
   isFunction,
-  isNil
+  isNil,
+  isUndefined
 } from './validator-utils'
 
 export type { RequiredKeys } from './type-utils'

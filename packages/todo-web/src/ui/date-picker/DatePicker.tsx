@@ -1,4 +1,4 @@
-import { defineComponent, ref, computed, onMounted, ComponentPublicInstance } from 'vue'
+import { defineComponent, ref, computed, onMounted } from 'vue'
 import type { PropType } from 'vue'
 import type { Dayjs } from 'dayjs'
 import { genProp } from '@/utils'
@@ -16,7 +16,8 @@ const datePickerProps = () => {
       default: {
         rightIcon: dateIcon
       }
-    }
+    },
+    placeholder: genProp(String)
   }
 }
 
@@ -28,12 +29,12 @@ export const DatePicker = defineComponent({
   },
   props: datePickerProps(),
   emits: ['change'],
-  setup(props, { emit }) {
+  setup(props) {
     const value = ref<Dayjs | undefined>(props.value)
     const panelVisible = ref(false)
     const panelX = ref(0)
     const panelY = ref(0)
-    const inputInstance = ref<ComponentPublicInstance | null>(null)
+    const inputInstance = ref()
     const formattedValue = computed<string>(() => {
       return value.value ? value.value.format(props.format) : ''
     })
@@ -41,7 +42,7 @@ export const DatePicker = defineComponent({
     const handleShowPanel = (e: FocusEvent) => {
       e.stopPropagation()
 
-      const rect = (inputInstance.value?.$refs.input as HTMLInputElement).getBoundingClientRect()
+      const rect = inputInstance.value?.input.getBoundingClientRect()
       panelX.value = rect?.x ?? 0
       panelY.value = (rect?.y ?? 0) + 34
       panelVisible.value = true
@@ -55,7 +56,7 @@ export const DatePicker = defineComponent({
 
     onMounted(() => {
       document.addEventListener('click', handleClosePanel);
-      (inputInstance.value?.$refs.input as HTMLInputElement).addEventListener('click', (e) => {
+      inputInstance.value?.input.addEventListener('click', (e: Event) => {
         e.stopPropagation()
       })
     })
@@ -65,9 +66,11 @@ export const DatePicker = defineComponent({
         <Input
           {...props.inputProps}
           class='date-pick-input'
+          placeholder={props.placeholder}
           value={formattedValue.value}
           ref={inputInstance}
           onFocus={handleShowPanel}
+          onClickRightIcon={() => inputInstance.value?.focus()}
         />
         <DatePickerPanel
           visible={panelVisible.value}
